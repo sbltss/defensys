@@ -1,0 +1,69 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("leaflet/dist/leaflet.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins";
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 0px rgba(0, 0, 0, 0);
+  border-radius: 2px;
+  background-color: #f5f5f500;
+}
+
+::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+  background-color: #f5f5f500;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  -webkit-box-shadow: inset 0 0 0px rgba(0, 0, 0, 0.3);
+  background-color: #0015291f;
+}
+
+#components-tabs-demo-card-top .code-box-demo {
+  padding: 24px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+img.ant-image-preview-img {
+  display: inline-block !important;
+}
+.ant-tabs-nav {
+  margin-bottom: 0 !important;
+}
+
+button.gm-ui-hover-effect {
+  visibility: hidden;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+.ant-table-cell:empty:after {
+  content: "-";
+}
+
+video::-webkit-media-controls-current-time-display,
+video::-webkit-media-controls-timeline,
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-pausebutton {
+  display: none;
+}
+
+.ant-btn-primary {
+  background-color: #1e40af;
+}

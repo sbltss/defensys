@@ -65,7 +65,7 @@ const ReportedTickets = () => {
     {
       title: "Citizen",
       dataIndex: null,
-      width: "150px",
+      width: "200px",
       render: (data) => (
         <div className="flex flex-col items-center">
           <span>{`${data.firstName} ${data.lastName}`}</span>
@@ -76,6 +76,13 @@ const ReportedTickets = () => {
               </Tag>
             </div>
           )}
+          {data?.departmentName || data?.departmentType ? (
+            <div>
+              <Tag color="red" className="mx-0">
+                {data?.departmentType} - {data?.departmentName}
+              </Tag>
+            </div>
+          ) : null}
         </div>
       ),
     },

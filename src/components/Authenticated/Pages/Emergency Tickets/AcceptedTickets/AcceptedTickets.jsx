@@ -136,7 +136,7 @@ const AcceptedTickets = () => {
       },
     },
     {
-      width: "150px",
+      width: "200px",
       title: "Citizen",
       dataIndex: null,
       render: (data) => (
@@ -149,6 +149,13 @@ const AcceptedTickets = () => {
               </Tag>
             </div>
           )}
+          {data?.departmentName || data?.departmentType ? (
+            <div>
+              <Tag color="red" className="mx-0">
+                {data?.departmentType} - {data?.departmentName}
+              </Tag>
+            </div>
+          ) : null}
         </div>
       ),
     },

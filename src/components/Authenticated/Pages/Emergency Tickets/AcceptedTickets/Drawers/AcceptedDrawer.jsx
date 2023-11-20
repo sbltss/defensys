@@ -82,22 +82,17 @@ const AcceptedDrawer = () => {
   const validateResolve = () => {
     let isValid = false;
     if (currentUser.accountType === "agent") {
-      assignedDepartments.forEach((d) => {
-        if (d.status === 3) isValid = true;
-      });
+      const checkIfAllResolved = assignedDepartments.every(item => item.status === 3)
+      if (checkIfAllResolved) setIsResolving(true)
+      else message.warning("All department must be reported.")
     } else {
       assignedResponseTeams.forEach((rt) => {
         if (rt.status === 4) isValid = true;
       });
-    }
 
-    if (isValid) setIsResolving(true);
-    else
-      message.warning(
-        currentUser.accountType === "agent"
-          ? "No department has reported yet"
-          : "No response team has reported yet"
-      );
+      if (isValid) setIsResolving(true);
+      else message.warning("No response team has reported yet");
+    }
   };
 
   console.log((currentUser.accountType === "agent" &&
@@ -105,7 +100,6 @@ const AcceptedDrawer = () => {
 
   console.log(currentUser.accountType)
   console.log(selectedAcceptedTicket?.status)
-
 
   return (
     <>

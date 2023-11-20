@@ -270,6 +270,13 @@ const TicketReport = ({ reportData, selectTicketHandler, reload }) => {
                               {moment(rt.dtResolved).format("lll")}
                             </Descriptions.Item>
                           )}
+                          {(rt.dtResolved && rt.dtAccepted) &&  (
+                            <Descriptions.Item label="Resolution Time">
+                              {moment.duration(moment(rt.dtResolved).diff(moment(rt.dtAccepted), 'HH:mm:ss')).days()} day(s)&nbsp;
+                              {Math.floor(moment.duration(moment(rt.dtResolved).diff(moment(rt.dtAccepted), 'HH:mm:ss')).asHours())} hour(s)&nbsp;
+                              {moment.duration(moment(rt.dtResolved).diff(moment(rt.dtAccepted), 'HH:mm:ss')).minutes()} minute(s)&nbsp;
+                            </Descriptions.Item>
+                          )}
                           <Descriptions.Item label="Remarks">
                             {rt.remarks}
                           </Descriptions.Item>
@@ -320,9 +327,12 @@ const formatTicketInfo = (ticketInfo, reportCategories, type = "ticket") => {
     callerId,
     firstName,
     lastName,
+    departmentName,
+    departmentType,
     mobileNumber,
     imageUrl,
   } = ticketInfo;
+  console.log(ticketInfo)
   if (type === "ticket")
     return [
       {
@@ -411,7 +421,19 @@ const formatTicketInfo = (ticketInfo, reportCategories, type = "ticket") => {
         label: "Account ID",
         value: callerId,
       },
-      { label: "Citizen", value: `${firstName} ${lastName}` },
+      { 
+        label: "Citizen", 
+        value: <div className="flex flex-col">
+          <span>{`${firstName} ${lastName}`}</span>
+          {departmentName || departmentType ? (
+            <div>
+              <Tag color="red" className="mx-0">
+                {departmentType} - {departmentName}
+              </Tag>
+            </div>
+          ) : null}
+        </div>
+      },
       {
         label: "Contact Number",
         value: mobileNumber,

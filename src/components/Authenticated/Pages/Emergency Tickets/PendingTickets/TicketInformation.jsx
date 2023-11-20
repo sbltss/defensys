@@ -17,6 +17,8 @@ const TicketInformation = ({ reportData }) => {
     dateCreated,
     firstName,
     lastName,
+    departmentName,
+    departmentType,
     callerId,
     mobileNumber,
     imageUrl,
@@ -88,7 +90,18 @@ const TicketInformation = ({ reportData }) => {
           reportCategories
         )}
       </Item>
-      <Item label="Constituent Name">{`${firstName} ${lastName}`}</Item>
+      <Item label="Constituent Name">
+        <div className="flex flex-col">
+          <span>{`${firstName} ${lastName}`}</span>
+          {departmentName || departmentType ? (
+            <div>
+              <Tag color="red" className="mx-0">
+                {departmentType} - {departmentName}
+              </Tag>
+            </div>
+          ) : null}
+        </div>
+      </Item>
       <Item label="Constituent ID">
         {callerId}
         {!callerId && (

@@ -1,16 +1,17 @@
-import { Badge, Collapse, Descriptions, Image } from "antd";
+import { Badge, Collapse, Descriptions, Image, Tag } from "antd";
 import moment from "moment";
 import React from "react";
 const { Item } = Descriptions;
 const { Panel } = Collapse;
 
 const ResponseTeam = ({ rt }) => {
+  console.log(rt)
   return (
     <Collapse ghost className="w-[500px]">
       <Panel
         header={
           <div className="flex flex-row justify-between">
-            <span>{rt.rtName}</span>
+            <span>{rt.rtName} {rt.isOffline === 1 ? <Tag color="yellow">Offline Report</Tag>: ''}</span>
             {rt.status === 0 && <Badge status="default" text="Pending" />}
             {rt.status === 1 && <Badge status="error" text="Declined" />}
             {rt.status === 2 && <Badge status="processing" text="Accepted" />}

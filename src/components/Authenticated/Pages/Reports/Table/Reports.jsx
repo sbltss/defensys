@@ -6,6 +6,7 @@ import Button from "../../../../UI/Button/Button";
 import { getFilters, getReportCategory } from "../../../../../helpers";
 import Badge from "../../../../UI/Badge/Badge";
 import { searchFunction } from "../../../../../helpers/searchFunction";
+import { Tag } from "antd";
 
 const Reports = ({ selectTicketHandler }) => {
   const { fetchedTickets, isLoading } = useSelector((state) => state.reports);
@@ -50,7 +51,18 @@ const Reports = ({ selectTicketHandler }) => {
       width: 200,
       title: "Citizen",
       dataIndex: null,
-      render: (d) => `${d.firstName} ${d.lastName}`,
+      render: (d) => (
+        <div className="flex flex-col">
+          <span>{`${d.firstName} ${d.lastName}`}</span>
+          {d?.departmentName || d?.departmentType ? (
+            <div>
+              <Tag color="red" className="mx-0">
+                {d?.departmentType} - {d?.departmentName}
+              </Tag>
+            </div>
+          ) : null}
+        </div>
+      )
     },
     {
       width: 150,

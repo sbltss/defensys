@@ -317,6 +317,7 @@ const OnlineDrawer = ({
             dispatch(setStatus("ONLINE"));
             currentStream.current?.getTracks().forEach((track) => track.stop());
             message.info("The call has been disconnected");
+            dispatch(setOnlineListOpen(false))
             subs();
           }
         });
@@ -349,6 +350,7 @@ const OnlineDrawer = ({
           dispatch(setStatus("ONLINE"));
           stream.getTracks().forEach((track) => track.stop());
           message.info("The call has been disconnected");
+          dispatch(setOnlineListOpen(false))
         });
       })
       .catch((err) => {

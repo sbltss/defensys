@@ -8,6 +8,7 @@ import Badge from "../../../../UI/Badge/Badge";
 import { ticketsActions } from "../../../../../store/store";
 import Button from "../../../../UI/Button/Button";
 import DeclinedDrawer from "./Drawer/DeclinedDrawer";
+import { Tag } from "antd";
 
 const { selectDeclinedTicket } = ticketsActions;
 
@@ -37,7 +38,7 @@ const DeclinedTickets = () => {
           />
         );
       },
-      width: "100px",
+      width: "150px",
     },
     {
       title: "Type",
@@ -53,30 +54,48 @@ const DeclinedTickets = () => {
       render: (data) => (
         <Badge type={+data === 0 ? "withoutInjury" : "withInjury"} />
       ),
-      width: "10%",
+      width: "150px",
     },
     {
       title: "Ticket Number",
       dataIndex: "transactionNumber",
       render: (data) => <nobr>{data}</nobr>,
-      width: "10%",
+      width: "200px",
     },
     {
       title: "Citizen",
       dataIndex: null,
-      width: "10%",
-      render: (data) => `${data.firstName} ${data.lastName}`,
+      width: "200px",
+      render: (data) => (
+        <div className="flex flex-col items-center">
+          <span>{`${data.firstName} ${data.lastName}`}</span>
+          {!data.callerId && (
+            <div>
+              <Tag color="red" className="mx-0">
+                Non-registered
+              </Tag>
+            </div>
+          )}
+          {data?.departmentName || data?.departmentType ? (
+            <div>
+              <Tag color="red" className="mx-0">
+                {data?.departmentType} - {data?.departmentName}
+              </Tag>
+            </div>
+          ) : null}
+        </div>
+      ),
     },
     {
       title: "Mobile",
       dataIndex: "mobileNumber",
-      width: "10%",
+      width: "130px",
     },
     {
       title: "Date",
       dataIndex: "dateCreated",
       render: (data) => moment(data).format("lll"),
-      width: "10%",
+      width: "100px",
       sorter: (a, b) => {
         return a.dateCreated.localeCompare(b.Created);
       },
@@ -86,12 +105,12 @@ const DeclinedTickets = () => {
     {
       title: "Created By",
       dataIndex: "createdBy",
-      width: "10%",
+      width: "150px",
     },
     {
       title: "Address",
       dataIndex: "address",
-      width: "22%",
+      width: "200px",
     },
   ];
   return (

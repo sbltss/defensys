@@ -129,7 +129,7 @@ const PendingTickets = () => {
       render: (data) => <nobr>{data}</nobr>,
     },
     {
-      width: "150px",
+      width: "200px",
       title: "Citizen",
       dataIndex: null,
 
@@ -143,6 +143,13 @@ const PendingTickets = () => {
               </Tag>
             </div>
           )}
+          {data?.departmentName || data?.departmentType ? (
+            <div>
+              <Tag color="red" className="mx-0">
+                {data?.departmentType} - {data?.departmentName}
+              </Tag>
+            </div>
+          ) : null}
         </div>
       ),
     },

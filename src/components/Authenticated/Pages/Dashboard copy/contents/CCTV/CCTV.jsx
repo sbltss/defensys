@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 const CCTV = () => {
   useEffect(() => {
     const nvr = new Nvr({
+      // ip: "192.168.3.52",
       ip: "192.168.2.47",
       user: "admin",
       password: "Dynamic2014",

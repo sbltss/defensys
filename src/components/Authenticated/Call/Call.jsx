@@ -31,6 +31,7 @@ const {
   setPeer,
   setCallMode,
   setCitizenInfo,
+  setOnlineListOpen,
 } = callActions;
 const ringToneAudio = new Audio(ringtone);
 const Call = () => {
@@ -255,6 +256,7 @@ const Call = () => {
       type: currentUser.accountType === "agent" ? "AGENT" : "DEPARTMENT",
     });
     setCallOngoing(false);
+    dispatch(setOnlineListOpen(false))
     message.warning("You have been disconnected to the caller.");
     if (callerLocationSubs.current) callerLocationSubs.current();
     setMode("create");

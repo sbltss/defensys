@@ -250,7 +250,19 @@ export const declineTicket = async (payload) => {
 
 export const addUpdate = async (payload) => {
   try {
-    const result = await axios.post(`addUpdate`, payload.body);
+    const result = await axiosFile.post(`addUpdate`, payload.body);
+    return result;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const removeImageUpdate = async (payload) => {
+  try {
+    const result = await axios.post(
+      `removeImageUpdate/` + payload.param,
+      payload.body
+    );
     return result;
   } catch (err) {
     return err;
@@ -259,7 +271,7 @@ export const addUpdate = async (payload) => {
 
 export const editUpdate = async (payload) => {
   try {
-    const result = await axios.post(
+    const result = await axiosFile.post(
       `editUpdate/` + payload.param,
       payload.body
     );

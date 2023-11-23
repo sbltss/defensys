@@ -6,6 +6,7 @@ import moment from "moment";
 import { Popconfirm, message } from "antd";
 import EditUpdate from "../../Pages/Emergency Tickets/AcceptedTickets/Modals/EditUpdate";
 import { EditIcon, TrashIcon } from "../../../../assets/icons/Icons";
+import { Image } from 'antd';
 
 const Updates = ({
   transactionNumber,
@@ -73,36 +74,44 @@ const Updates = ({
       <>
         <EditUpdate open={updateEdit} setOpen={setUpdateEdit} />
         {updates.map((update) => (
-          <div key={update.id} className="flex flex-row gap-1 items-center">
-            {editable && (
-              <>
-                <Popconfirm
-                  title="Delete update"
-                  description="Are you sure to delete this update?"
-                  onConfirm={() => deleteUpdateHandler(update)}
-                  okText="Yes"
-                  okButtonProps={{
-                    className:
-                      "border-primary-900 bg-primary-700 hover:bg-primary-800 text-gray-100 ",
-                  }}
-                  cancelText="No"
-                >
-                  <button className="hover:text-gray-800 text-gray-500 duration-300">
-                    <TrashIcon />
+          <div>
+            {update?.imgUrl?.split(";;;").map(e => {
+              return e ? <Image
+                width={200}
+                src={import.meta.env.VITE_BASE_URL + '/' + e}
+              /> : null
+            })}
+            <div key={update.id} className="flex flex-row gap-1 items-center">
+              {editable && (
+                <>
+                  <Popconfirm
+                    title="Delete update"
+                    description="Are you sure to delete this update?"
+                    onConfirm={() => deleteUpdateHandler(update)}
+                    okText="Yes"
+                    okButtonProps={{
+                      className:
+                        "border-primary-900 bg-primary-700 hover:bg-primary-800 text-gray-100 ",
+                    }}
+                    cancelText="No"
+                  >
+                    <button className="hover:text-gray-800 text-gray-500 duration-300">
+                      <TrashIcon />
+                    </button>
+                  </Popconfirm>
+                  <button
+                    onClick={() => setUpdateEdit(update)}
+                    className="hover:text-gray-800 text-gray-500 duration-300"
+                  >
+                    <EditIcon />
                   </button>
-                </Popconfirm>
-                <button
-                  onClick={() => setUpdateEdit(update)}
-                  className="hover:text-gray-800 text-gray-500 duration-300"
-                >
-                  <EditIcon />
-                </button>
-              </>
-            )}
-            <span className="text-sm font-medium text-gray-500">
-              {moment(update.dateCreated).format("lll")}:
-            </span>
-            <span className="text-gray-800">{update.message}</span>
+                </>
+              )}
+              <span className="text-sm font-medium text-gray-500">
+                {moment(update.dateCreated).format("lll")}:
+              </span>
+              <span className="text-gray-800">{update.message}</span>
+            </div>
           </div>
         ))}
       </>

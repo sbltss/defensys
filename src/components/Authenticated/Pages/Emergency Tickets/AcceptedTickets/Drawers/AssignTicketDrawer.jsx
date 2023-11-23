@@ -167,7 +167,7 @@ const AssignTicketDrawer = ({ assigning, setAssigning, selectedTicket }) => {
                       .map((d) => {
                         let alreadyExist = false;
                         let alreadyAssignedArr = assignedDepartments.filter(
-                          (ad) => ad.allocatedTo === d.accountId
+                          (ad) => ad.allocatedTo === d.accountId && ad.status !== 2
                         );
                         if (alreadyAssignedArr.length > 0) alreadyExist = true;
                         return (

@@ -37,7 +37,6 @@ const Department = ({ department }) => {
             ) : (
               <span>{name}</span>
             )}
-
             {status === 0 && <Badge status="default" text="Pending" />}
             {status === 1 && <Badge status="processing" text="Accepted" />}
             {status === 2 && <Badge status="danger" text="Declined" />}

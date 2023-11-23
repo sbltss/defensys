@@ -1,6 +1,7 @@
 const modules = ["cctvdiv", "eridiv", "weatherdiv", "sosdiv"];
 let CCTVPROPS = {
   ip: "192.168.2.61",
+  // ip: "192.168.3.52",
   encryptedip: document.getElementById("encryptedcctvIP").value,
   port: document.getElementById("cctvPORT").value,
   username: document.getElementById("cctvUSERNAME").value,

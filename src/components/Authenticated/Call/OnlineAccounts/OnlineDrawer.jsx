@@ -56,6 +56,12 @@ const OnlineDrawer = ({
   }, []);
 
   useEffect(() => {
+    if (status === "ONLINE" && callIncoming === false) {
+      dispatch(dispatch(setOnlineListOpen(false)));
+    }
+  }, [status, callIncoming])
+
+  useEffect(() => {
     let sub;
     if (callIncoming && ["AGENT", "DEPARTMENT", "RT"].includes(callMode)) {
       dispatch(dispatch(setOnlineListOpen(true)));
@@ -391,6 +397,7 @@ const OnlineDrawer = ({
     currentStream.current?.getTracks().forEach((track) => track.stop());
     setCallerInfo(null);
     setCallingInfo(null);
+    dispatch(setOnlineListOpen(false))
   };
 
   const acceptCallHandler = async () => {
@@ -451,6 +458,7 @@ const OnlineDrawer = ({
         });
       });
   };
+
   return (
     <Drawer
       title={<span>Defensys Call Center</span>}

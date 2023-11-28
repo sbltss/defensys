@@ -32,17 +32,17 @@ const ResponseTeamTable = ({ assigning, responseTeams, rtLocations }) => {
           assignedResponseTeams.filter((rt) => rt.accountId === data.accountId)
             .length > 0
         )
-          return <Popconfirm
-            title="Transfer assignment"
-            description="You are about to transfer responder to another assignment. Are you sure?"
-            onConfirm={() => confirm(data)}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button type="primary" text="Already assigned" />
-          </Popconfirm>
-          // return <span className="flex justify-center">Already assigned</span>;
+          // return <Popconfirm
+          //   title="Transfer assignment"
+          //   description="You are about to transfer responder to another assignment. Are you sure?"
+          //   onConfirm={() => confirm(data)}
+          //   onCancel={cancel}
+          //   okText="Yes"
+          //   cancelText="No"
+          // >
+          //   <Button type="primary" text="Already assigned" />
+          // </Popconfirm>
+          return <span className="flex justify-center">Already assigned</span>;
         if (+data.isAssigned === 1)
           return (
             <span className="flex justify-center">

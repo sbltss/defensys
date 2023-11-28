@@ -118,7 +118,6 @@ const AcceptedTickets = () => {
       title: "Status",
       dataIndex: null,
       render: (d) => {
-        console.log(d)
         if (currentUser.accountType === "department" && d.status === 2)
           return <Badge type={"ticketStatus"} text={d.status} />;
         return (

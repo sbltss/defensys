@@ -8,7 +8,7 @@ const { declineTicket } = ticketsActions;
 const DeclineTicketDrawer = ({ declining, setDeclining }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const { declineTicketLoading, selectedPendingTicket } = useSelector(
+  const { declineTicketLoading, selectedPendingTicket, selectedAcceptedTicket } = useSelector(
     (state) => state.tickets
   );
   const submitFormHandler = () => {
@@ -16,7 +16,7 @@ const DeclineTicketDrawer = ({ declining, setDeclining }) => {
   };
   const onFinishHandler = (e) => {
     const payload = {
-      param: selectedPendingTicket?.transactionNumber,
+      param: selectedPendingTicket?.transactionNumber || selectedAcceptedTicket?.transactionNumber,
       body: {
         remarks: e.reason,
       },

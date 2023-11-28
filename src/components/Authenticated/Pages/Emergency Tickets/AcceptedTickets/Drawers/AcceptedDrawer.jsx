@@ -10,6 +10,9 @@ import AssignRTDrawer from "./AssignRTDrawer";
 import AssignTicketDrawer from "./AssignTicketDrawer";
 import MapDrawer from "./MapDrawer";
 import ResolveTicketDrawer from "./ResolveTicketDrawer";
+import DeclineTicketDrawer from "../../PendingTickets/Drawers/DeclineTicketDrawer";
+import TransferRTDrawer from "./TransferRTDrawer";
+
 const { selectAcceptedTicket, setAssigning, resolveTicket } = ticketsActions;
 const { selectChatTicket } = chatActions;
 
@@ -17,6 +20,7 @@ const AcceptedDrawer = () => {
   const [resolveForm] = Form.useForm();
   const [mapOpen, setMapOpen] = useState(false);
   const [isResolving, setIsResolving] = useState(false);
+  const [declining, setDeclining] = useState(false);
   const dispatch = useDispatch();
   const {
     selectedAcceptedTicket,
@@ -24,6 +28,7 @@ const AcceptedDrawer = () => {
     assignedResponseTeams,
     assignedDepartments,
     resolveTicketLoading,
+    declineTicketLoading
   } = useSelector((state) => state.tickets);
   const { currentUser, socket } = useSelector((state) => state.auth);
   const onClose = () => {
@@ -122,6 +127,12 @@ const AcceptedDrawer = () => {
               selectedAcceptedTicket?.ticketStatus === 1)) && (
             <div className="flex flex-row gap-2 w-full justify-end">
               <Button
+                loading={declineTicketLoading}
+                onClick={() => setDeclining(true)}
+                type="danger"
+                text="Decline Ticket"
+              />
+              <Button
                 onClick={() =>
                   dispatch(selectChatTicket(selectedAcceptedTicket))
                 }
@@ -189,12 +200,24 @@ const AcceptedDrawer = () => {
           />
         )}
         {currentUser.accountType === "department" && (
+          <TransferRTDrawer
+            transferRT={transferRT}
+            setTransferRT={setTransferRT}
+            selectedRT={selectedRT}
+          />
+        )}
+        {currentUser.accountType === "department" && (
           <AssignRTDrawer
             assigning={assigning}
             setAssigning={setAssigningHandler}
             selectedTicket={selectedAcceptedTicket}
           />
         )}
+        <DeclineTicketDrawer
+          declining={declining}
+          setDeclining={setDeclining}
+          selectedTicket={selectedAcceptedTicket}
+        />
       </Drawer>
     </>
   );

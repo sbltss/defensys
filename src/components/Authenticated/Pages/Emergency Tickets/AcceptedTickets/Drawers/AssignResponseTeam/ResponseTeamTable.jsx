@@ -5,6 +5,7 @@ import { PlusIcon } from "../../../../../../../assets/icons/Icons";
 import { searchFunction } from "../../../../../../../helpers/searchFunction";
 import { ticketsActions } from "../../../../../../../store/store";
 import Button from "../../../../../../UI/Button/Button";
+import { Popconfirm } from "antd";
 const { assignToResponseTeam } = ticketsActions;
 
 const ResponseTeamTable = ({ assigning, responseTeams, rtLocations }) => {
@@ -12,16 +13,36 @@ const ResponseTeamTable = ({ assigning, responseTeams, rtLocations }) => {
   const { selectedAcceptedTicket, assignedResponseTeams } = useSelector(
     (state) => state.tickets
   );
+
+  const confirm = (data) => {
+    console.log(data);
+  };
+
+  const cancel = (e) => {
+    console.log(e);
+  };
+
   const columns = [
     {
       title: "Action",
       dataIndex: null,
+      width: "200px",
       render: (data) => {
         if (
           assignedResponseTeams.filter((rt) => rt.accountId === data.accountId)
             .length > 0
         )
-          return <span className="flex justify-center">Already assigned</span>;
+          return <Popconfirm
+            title="Transfer assignment"
+            description="You are about to transfer responder to another assignment. Are you sure?"
+            onConfirm={() => confirm(data)}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button type="primary" text="Already assigned" />
+          </Popconfirm>
+          // return <span className="flex justify-center">Already assigned</span>;
         if (+data.isAssigned === 1)
           return (
             <span className="flex justify-center">

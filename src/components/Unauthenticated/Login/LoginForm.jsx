@@ -42,7 +42,7 @@ const LoginForm = ({ loginMode }) => {
       className="w-full"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
-      initialValues={{ email: "ccadmin@defensys.ph", password: "Defensys2023" }}
+      initialValues={{ email: "@defensys.ph", password: "Defensys2023" }}
     >
       <div className="w-full mb-4 flex rounded-md bg-gray-100 items-center">
         <UsersIcon className="px-3 mt-1" />

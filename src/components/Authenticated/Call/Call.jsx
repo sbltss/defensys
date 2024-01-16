@@ -74,6 +74,12 @@ const Call = () => {
     callModeRef.current = callMode;
   }, [callMode]);
 
+  useEffect(() => {
+    return () => {
+      if (peerRef.current) peerRef.current.disconnect();
+    };
+  }, []);
+
   const incomingCallSubs = useRef(null);
   const callerId = useRef(null);
   const callStart = useRef(null);
@@ -256,7 +262,7 @@ const Call = () => {
       type: currentUser.accountType === "agent" ? "AGENT" : "DEPARTMENT",
     });
     setCallOngoing(false);
-    dispatch(setOnlineListOpen(false))
+    dispatch(setOnlineListOpen(false));
     message.warning("You have been disconnected to the caller.");
     if (callerLocationSubs.current) callerLocationSubs.current();
     setMode("create");
@@ -277,6 +283,7 @@ const Call = () => {
         clearInterval(ringtoneInterval.current);
       }
     } else {
+      console.log(incomingCallSubs.current, "incomingCallSubs.current");
       if (incomingCallSubs.current) incomingCallSubs.current();
       if (callIncoming) {
         dispatch(fetchCitizenInfo({ accountId: callerId.current }));
@@ -287,16 +294,20 @@ const Call = () => {
           ringToneAudio.currentTime = 0;
           ringToneAudio.play();
         }, 11000);
+        console.log(peerQueueingRef.current, "peerQueueingRef");
         incomingCallSubs.current = onValue(
           peerQueueingRef.current,
           (snapshot) => {
             const data = snapshot.val();
+            console.log(data, "data");
             if (!data?.includes(callerId.current) && callIncoming) {
               get(peerOngoingCallsRef.current).then(async (snapshot) => {
                 let val = snapshot.val();
+                console.log(val, "VAL");
                 if (val?.[callerId.current] !== currentUser.accountId) {
                   await get(peerClientsRef.current).then(async (snapshot) => {
                     let val = snapshot.val();
+                    console.log(val, "VAL2");
                     if (val.status !== "ONLINE") {
                       update(peerClientsRef.current, {
                         status: "ONLINE",
@@ -326,6 +337,7 @@ const Call = () => {
       }
     }
   }, [callIncoming]);
+
   useEffect(() => {
     if (peerStatus === "reconnecting" && currentUser?.commandCenterId) {
       try {
@@ -488,6 +500,7 @@ const Call = () => {
                 currentConn.current = conn;
               });
               peer.on("call", (call) => {
+                console.log(call, "asdasdasd");
                 setCmsCaller(call.peer);
                 callModeRef.current = call.metadata;
                 dispatch(setCallMode(call.metadata));

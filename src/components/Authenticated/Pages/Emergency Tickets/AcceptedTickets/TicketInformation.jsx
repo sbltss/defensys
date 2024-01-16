@@ -38,6 +38,9 @@ const TicketInformation = ({ reportData }) => {
     personsInvolved,
     remarks,
     agentId,
+    ccLat,
+    ccLong,
+    ccAddress,
   } = reportData || {};
   const { reportCategory: reportCategories, agentList } = useSelector(
     (state) => state.resources
@@ -94,26 +97,54 @@ const TicketInformation = ({ reportData }) => {
           : "Cancelled"}
       </Item> */}
         <Item label="Content">{content}</Item>
-        <Item label="Address">{address}</Item>
-        {latitude && longitude && (
-          <Item label="Coordinates">
-            <div className="flex flex-row justify-between">
-              <div className="flex flex-col">
-                <span>{`Latitude:${(+latitude).toFixed(4)}`}</span>
-                <span>{`Longitude:${(+longitude).toFixed(4)}`}</span>
-              </div>
-              <div>
-                <a
-                  className="text-blue-500"
-                  href={`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  View in Google Maps
-                </a>
-              </div>
-            </div>
-          </Item>
+        {!address && !latitude && !longitude ? (
+          <>
+            <Item label="Address">{ccLat}</Item>
+            {ccLat && ccLong && (
+              <Item label="Coordinates">
+                <div className="flex flex-row justify-between">
+                  <div className="flex flex-col">
+                    <span>{`Latitude:${(+ccLat).toFixed(4)}`}</span>
+                    <span>{`Longitude:${(+ccLong).toFixed(4)}`}</span>
+                  </div>
+                  <div>
+                    <a
+                      className="text-blue-500"
+                      href={`https://www.google.com/maps/search/?api=1&query=${ccLat},${ccLong}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View in Google Maps
+                    </a>
+                  </div>
+                </div>
+              </Item>
+            )}
+          </>
+        ) : (
+          <>
+            <Item label="Address">{address}</Item>
+            {latitude && longitude && (
+              <Item label="Coordinates">
+                <div className="flex flex-row justify-between">
+                  <div className="flex flex-col">
+                    <span>{`Latitude:${(+latitude).toFixed(4)}`}</span>
+                    <span>{`Longitude:${(+longitude).toFixed(4)}`}</span>
+                  </div>
+                  <div>
+                    <a
+                      className="text-blue-500"
+                      href={`https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View in Google Maps
+                    </a>
+                  </div>
+                </div>
+              </Item>
+            )}
+          </>
         )}
         <Item label="Date & Time Created">
           {moment(dateCreated).format("LLL")}

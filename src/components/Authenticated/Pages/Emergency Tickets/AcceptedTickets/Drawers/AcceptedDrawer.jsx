@@ -28,7 +28,7 @@ const AcceptedDrawer = () => {
     assignedResponseTeams,
     assignedDepartments,
     resolveTicketLoading,
-    declineTicketLoading
+    declineTicketLoading,
   } = useSelector((state) => state.tickets);
   const { currentUser, socket } = useSelector((state) => state.auth);
   const onClose = () => {
@@ -87,9 +87,11 @@ const AcceptedDrawer = () => {
   const validateResolve = () => {
     let isValid = false;
     if (currentUser.accountType === "agent") {
-      const checkIfAllResolved = assignedDepartments.every(item => item.status === 3)
-      if (checkIfAllResolved) setIsResolving(true)
-      else message.warning("All department must be reported.")
+      const checkIfAllResolved = assignedDepartments.every(
+        (item) => item.status === 3
+      );
+      if (checkIfAllResolved) setIsResolving(true);
+      else message.warning("All department must be reported.");
     } else {
       assignedResponseTeams.forEach((rt) => {
         if (rt.status === 4) isValid = true;
@@ -99,12 +101,6 @@ const AcceptedDrawer = () => {
       else message.warning("No response team has reported yet");
     }
   };
-
-  console.log((currentUser.accountType === "agent" &&
-  selectedAcceptedTicket?.status === 1))
-
-  console.log(currentUser.accountType)
-  console.log(selectedAcceptedTicket?.status)
 
   return (
     <>
@@ -199,13 +195,13 @@ const AcceptedDrawer = () => {
             selectedTicket={selectedAcceptedTicket}
           />
         )}
-        {currentUser.accountType === "department" && (
+        {/* {currentUser.accountType === "department" && (
           <TransferRTDrawer
             transferRT={transferRT}
             setTransferRT={setTransferRT}
             selectedRT={selectedRT}
           />
-        )}
+        )} */}
         {currentUser.accountType === "department" && (
           <AssignRTDrawer
             assigning={assigning}

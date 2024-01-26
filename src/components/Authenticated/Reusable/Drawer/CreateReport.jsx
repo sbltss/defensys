@@ -121,7 +121,6 @@ const CreateReport = ({
               onClick={() => setIsMapOpen(true)}
             />
           </div>
-
           <CreateReportForm
             form={form}
             coords={location}

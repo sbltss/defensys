@@ -76,6 +76,7 @@ const Call = () => {
 
   useEffect(() => {
     return () => {
+      console.log("g");
       if (peerRef.current) peerRef.current.disconnect();
     };
   }, []);
@@ -189,6 +190,14 @@ const Call = () => {
       });
   };
 
+  const resolveAfter2Seconds = (data) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(data);
+      }, 2000);
+    });
+  };
+
   const dropCallHandler = async () => {
     mixAV.current.stop(function (blob) {
       getSeekableBlob(blob, function (seekableBlob) {
@@ -248,12 +257,10 @@ const Call = () => {
     currentCall.current = null;
     await currentCall.current?.close();
     currentStream.current?.getTracks().forEach((track) => track.stop());
-    await get(peerOngoingCallsRef.current).then((snapshot) => {
+    await get(peerOngoingCallsRef.current).then(async (snapshot) => {
       let val = snapshot.val();
-      if (val[callerId.current]) {
-        delete val[callerId.current];
-      }
-      set(peerOngoingCallsRef.current, val);
+      delete val[callerId.current];
+      await set(peerOngoingCallsRef.current, val);
     });
 
     callerId.current = null;
@@ -283,7 +290,6 @@ const Call = () => {
         clearInterval(ringtoneInterval.current);
       }
     } else {
-      console.log(incomingCallSubs.current, "incomingCallSubs.current");
       if (incomingCallSubs.current) incomingCallSubs.current();
       if (callIncoming) {
         dispatch(fetchCitizenInfo({ accountId: callerId.current }));
@@ -294,20 +300,16 @@ const Call = () => {
           ringToneAudio.currentTime = 0;
           ringToneAudio.play();
         }, 11000);
-        console.log(peerQueueingRef.current, "peerQueueingRef");
         incomingCallSubs.current = onValue(
           peerQueueingRef.current,
           (snapshot) => {
             const data = snapshot.val();
-            console.log(data, "data");
             if (!data?.includes(callerId.current) && callIncoming) {
               get(peerOngoingCallsRef.current).then(async (snapshot) => {
                 let val = snapshot.val();
-                console.log(val, "VAL");
                 if (val?.[callerId.current] !== currentUser.accountId) {
                   await get(peerClientsRef.current).then(async (snapshot) => {
                     let val = snapshot.val();
-                    console.log(val, "VAL2");
                     if (val.status !== "ONLINE") {
                       update(peerClientsRef.current, {
                         status: "ONLINE",
@@ -500,7 +502,6 @@ const Call = () => {
                 currentConn.current = conn;
               });
               peer.on("call", (call) => {
-                console.log(call, "asdasdasd");
                 setCmsCaller(call.peer);
                 callModeRef.current = call.metadata;
                 dispatch(setCallMode(call.metadata));

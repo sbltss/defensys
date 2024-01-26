@@ -140,7 +140,7 @@ const App = () => {
                   <Unauthenticated />
                 </Suspense>
               )}
-              {isAuthenticated && location.pathme !== "/quickreport" && (
+              {isAuthenticated && location.pathname !== "/quickreport" && (
                 <Suspense
                   fallback={
                     <div className="h-screen w-screen">

@@ -136,6 +136,64 @@ function* addAccountRequest({ payload }) {
   }
 }
 
+function* addCaseTypeRequest({ payload }) {
+  const { addCaseTypeSuccess, requestError } = resourcesActions;
+  let result = yield call(resourcesApi[payload.listType], payload.body);
+  if (result.name === "AxiosError") {
+    yield put(requestError(result.response));
+  } else {
+    console.log(result);
+    yield put(
+      addCaseTypeSuccess({
+        message: result.data.message,
+        data: result.data.data,
+        listType: "caseTypes",
+      })
+    );
+  }
+}
+
+function* updateCaseTypeRequest({ payload }) {
+  const { updateCaseTypeSuccess, requestError } = resourcesActions;
+  let result = yield call(resourcesApi.updateCaseType, {
+    param: payload.id,
+    body: payload.body,
+  });
+
+  if (result.name === "AxiosError") {
+    yield put(requestError(result.response));
+  } else {
+    yield put(
+      updateCaseTypeSuccess({
+        message: result.data.message,
+        listType: "caseTypes",
+        body: payload.body,
+        id: payload.id,
+      })
+    );
+  }
+}
+
+function* deactivateCaseTypeRequest({ payload }) {
+  const { deactivateCaseTypeSuccess, requestError } = resourcesActions;
+  let result = yield call(resourcesApi.deactivateCaseType, {
+    param: payload.id,
+  });
+
+  if (result.name === "AxiosError") {
+    yield put(requestError(result.response));
+  } else {
+    yield put(
+      deactivateCaseTypeSuccess({
+        message: result.data.message,
+        listType: "caseTypes",
+        body: result.data.body,
+        id: payload.id,
+      })
+    );
+  }
+}
+
 // Export the saga (todo-saga)
 export default function* reportsSaga() {
   yield takeEvery(`resources/fetchResources`, fetchResourcesRequest);
@@ -144,4 +202,7 @@ export default function* reportsSaga() {
   yield takeLatest(`resources/reactivateAccount`, reactivateAccountRequest);
   yield takeLatest(`resources/updateAccount`, updateAccountRequest);
   yield takeLatest(`resources/addAccount`, addAccountRequest);
+  yield takeLatest(`resources/addCaseType`, addCaseTypeRequest);
+  yield takeLatest(`resources/updateCaseType`, updateCaseTypeRequest);
+  yield takeLatest(`resources/deactivateCaseType`, deactivateCaseTypeRequest);
 }

@@ -114,6 +114,36 @@ export const caseTypes = async () => {
   }
 };
 
+export const addCaseType = async (payload) => {
+  try {
+    const result = await axios.post("addCaseType", payload);
+    return result;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const updateCaseType = async (payload) => {
+  try {
+    const result = await axios.post(
+      "updateCaseType/" + payload.param,
+      payload.body
+    );
+    return result;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const deactivateCaseType = async (payload) => {
+  try {
+    const result = await axios.get("deactivateCaseType/" + payload.param);
+    return result;
+  } catch (err) {
+    return err;
+  }
+};
+
 export const reportCategory = async () => {
   try {
     const result = await axios.get("getReportCategory");

@@ -111,7 +111,7 @@ export const formatData = (tickets, caseTypes, geoJson) => {
       value: ticketsByCaseTypes[key],
     };
   });
-  ticketsByCaseTypes = ticketsByCaseTypes.sort((a, b) => {
+  ticketsByCaseTypes = ticketsByCaseTypes?.sort((a, b) => {
     if (a.y < b.y) {
       return 1;
     }
@@ -120,7 +120,7 @@ export const formatData = (tickets, caseTypes, geoJson) => {
     }
     return 0;
   });
-  barangayValues = getBarangayValues(tickets, caseTypes, geoJson).sort(
+  barangayValues = getBarangayValues(tickets, caseTypes, geoJson)?.sort(
     (a, b) => {
       if (a.counts.total < b.counts.total) {
         return 1;
@@ -168,7 +168,7 @@ export const formatData = (tickets, caseTypes, geoJson) => {
 };
 
 export const getBarangayValues = (tickets, caseTypes, geoJson) => {
-  const polygons = geoJson.features.map((feature) => ({
+  const polygons = geoJson?.features.map((feature) => ({
     poly: new window.google.maps.Polygon({
       paths: feature.geometry.coordinates[0].map((d) => ({
         lat: d[1],
@@ -177,7 +177,7 @@ export const getBarangayValues = (tickets, caseTypes, geoJson) => {
     }),
     properties: feature.properties,
   }));
-  let barangayValues = polygons.map((polygon) => {
+  let barangayValues = polygons?.map((polygon) => {
     let counts = { total: 0 };
     caseTypes?.forEach((ct) => {
       counts[ct.id] = 0;
@@ -202,7 +202,7 @@ export const getBarangayValues = (tickets, caseTypes, geoJson) => {
       return null;
     }
   });
-  return (barangayValues = barangayValues.filter((bv) => {
+  return (barangayValues = barangayValues?.filter((bv) => {
     return bv != null;
   }));
 };

@@ -93,3 +93,7 @@ video::-webkit-media-controls-pausebutton {
 .toolbar-wrapper .anticon:hover {
   opacity: 0.3;
 }
+
+table {
+  margin-bottom: 20px;
+}

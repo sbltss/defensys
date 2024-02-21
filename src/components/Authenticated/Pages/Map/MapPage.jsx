@@ -106,7 +106,8 @@ const MapPage = () => {
 
   const fetchGeoJson = async (cityId) => {
     const request = await axios.get(
-      `https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/geojson/barangays/hires/barangays-municity-ph${cityId}000.0.1.json`
+      `https://raw.githubusercontent.com/DGSI-Dev/philippines-json-maps/master/2019/geojson/barangays/hires/barangays-municity-ph${cityId}000.0.1.json`
+      // `https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/geojson/barangays/hires/barangays-municity-ph${cityId}000.0.1.json`
     );
     setGeoJson(request.data);
   };

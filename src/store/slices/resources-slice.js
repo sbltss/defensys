@@ -147,6 +147,56 @@ const ressourcesSlice = createSlice({
       state.selectedAccount = null;
       state.addLoading = false;
     },
+    addCaseType(state) {
+      state.addLoading = true;
+    },
+    addCaseTypeSuccess(state, action) {
+      console.log(action);
+      message.success(action.payload?.message);
+      console.log(action.payload?.listType);
+      state[action.payload?.listType] = [
+        ...current(state[action.payload?.listType]),
+        action.payload?.data,
+      ];
+      state.mode = false;
+      state.selectedAccount = null;
+      state.addLoading = false;
+    },
+    updateCaseType(state) {
+      state.updateLoading = true;
+    },
+    updateCaseTypeSuccess(state, action) {
+      message.success(action.payload?.message);
+
+      state[action.payload?.listType] = current(
+        state[action.payload?.listType]
+      ).map((acc) => {
+        if (acc.id === action.payload?.id)
+          return { ...acc, ...action.payload?.body };
+        return acc;
+      });
+
+      state.mode = false;
+      state.selectedAccount = null;
+      state.updateLoading = false;
+    },
+    deactivateCaseType(state) {
+      state.isLoading = true;
+    },
+    deactivateCaseTypeSuccess(state, action) {
+      message.success(action.payload?.message);
+
+      const caseTypes = current(state[action.payload?.listType]).map((acc) => {
+        if (acc.id === action.payload?.id) {
+          return { ...acc, isDeleted: 1 };
+        }
+        return acc;
+      });
+
+      state[action.payload?.listType] = caseTypes;
+
+      state.isLoading = false;
+    },
     resetStates(state) {
       state.isLoading = false;
       state.activationLoading = false;

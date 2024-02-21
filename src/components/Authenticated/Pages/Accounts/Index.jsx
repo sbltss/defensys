@@ -1,7 +1,7 @@
 import { lazy } from "react";
 
 const Agents = lazy(() => import("./Agent/Agents"));
-const CaseTypes = lazy(() => import("./CaseTypes"));
+const CaseTypes = lazy(() => import("./CaseType/CaseTypes"));
 const ResponseTeams = lazy(() => import("./ResponseTeam/ResponseTeams"));
 const Devices = lazy(() => import("./Device/Devices"));
 const Supervisors = lazy(() => import("./Supervisor/Supervisors"));

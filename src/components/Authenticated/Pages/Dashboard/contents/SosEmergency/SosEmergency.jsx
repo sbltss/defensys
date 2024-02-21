@@ -25,7 +25,8 @@ const SosEmergency = ({ expanded }) => {
 
   const fetchGeoJson = async (cityId) => {
     const request = await axios.get(
-      `https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/geojson/barangays/hires/barangays-municity-ph${cityId}000.0.1.json`
+      // `https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/geojson/barangays/hires/barangays-municity-ph${cityId}000.0.1.json`
+      `https://raw.githubusercontent.com/DGSI-Dev/philippines-json-maps/master/2019/geojson/barangays/hires/barangays-municity-ph${cityId}000.0.1.json`
     );
     setGeoJson(request.data);
   };
@@ -130,8 +131,26 @@ const SosEmergency = ({ expanded }) => {
           },
         };
       });
+    } else {
+      let tempDashboardData = formatData(sosData, caseTypes, geoJson);
+      let sortedCaseByTypes = tempDashboardData.ticketsByCaseTypes.sort(
+        (a, b) => b.value - a.value
+      );
+      setDashboardData(tempDashboardData);
+      setPieChartData((prevState) => {
+        return {
+          ...prevState,
+          series: sortedCaseByTypes.map((d) => d.value),
+          options: {
+            ...prevState.options,
+            labels: sortedCaseByTypes.map((d) => d.name),
+          },
+        };
+      });
     }
   }, [sosData, caseTypes, geoJson]);
+
+  console.log(dashboardData);
   return (
     <div className="grid lg:grid-cols-2 xl:grid-flow-row xl:grid-cols-1 lg:gap-2 xl:gap-4 ">
       <div className="lg:col-span-1 xl:col-span-1">
@@ -185,7 +204,7 @@ const SosEmergency = ({ expanded }) => {
                     return truncateString(e, 7);
                   },
                 },
-                categories: dashboardData.barangayValues?.map(
+                categories: dashboardData?.barangayValues?.map(
                   (d) => d.brgyName
                 ),
               },
@@ -193,7 +212,7 @@ const SosEmergency = ({ expanded }) => {
             series={[
               {
                 name: "Emergency Tickets",
-                data: dashboardData.barangayValues?.map((d) => d.counts.total),
+                data: dashboardData?.barangayValues?.map((d) => d.counts.total),
               },
             ]}
             type="bar"

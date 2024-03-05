@@ -64,7 +64,7 @@ const MenuButton = ({ type, children, text, anchor = "right" }) => {
         <Menu.Items
           className={
             placements[anchor === "topRight" ? anchor : "right"].placement +
-            " absolute mt-2 z-10 min-w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+            "  mt-2 z-10 min-w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           }
         >
           <div className="z-[999999]">{children}</div>

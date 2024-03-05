@@ -37,7 +37,7 @@ const DashboardPage = () => {
             ? "grid lg:grid-cols-2 xl:grid-cols-3 gap-4 gap-y-0"
             : undefined
         }
-      >
+      > 
         <div
           className={
             expanded

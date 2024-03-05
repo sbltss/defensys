@@ -129,7 +129,7 @@ const SensorsPage = () => {
         selectedSensor={selectedSensor}
         setSelectedSensor={setSelectedSensor}
       />
-      <div className="bg-white rounded w-full h-full shadow p-4 flex flex-col">
+      <div className="bg-white rounded w-full shadow p-4 flex flex-col">
         <div className="border-b flex flex-row justify-between p-2">
           <span className="font-semibold text-xl">Sensors</span>
           <Button
@@ -146,6 +146,7 @@ const SensorsPage = () => {
             }}
             searchable={true}
             pagination={{
+              showTotal: (total, range) => `Showing ${range[1]} of ${total} records`,
               showSizeChanger: true,
               defaultPageSize: 10,
               pageSizeOptions: [10, 20, 50, 100],

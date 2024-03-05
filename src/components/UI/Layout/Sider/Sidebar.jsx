@@ -12,13 +12,15 @@ const Sidebar = ({ collapsed, routes }) => {
   const location = useLocation();
   return (
     <Sider
-      className={`bg-white ${currentUser?.isDemo ? "pt-9" : ""}`}
+      className={`bg-white  ${currentUser?.isDemo ? "pt-9" : ""} ` }
       trigger={null}
       collapsible
       collapsed={collapsed}
       width={"270px"}
+      
     >
       <SiderHeader collapsed={collapsed} />
+      
       {/* <div className="flex gap-3 items-center p-4 flex-col font-semibold"> */}
       {/* {routes.map((route) => (
           <button

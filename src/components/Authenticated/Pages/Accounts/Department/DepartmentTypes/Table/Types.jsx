@@ -28,14 +28,23 @@ const Types = ({ fetchLoading, types, setSelectedType }) => {
     },
   ];
   return (
+  
     <Table
-      searchableProps={{ searchFunction }}
+      searchableProps={{ searchFunction: searchFunction }}
+      searchable = {true}
+      pagination={{
+        showTotal: (total, range) => `Showing ${range[1]} of ${total} records`,
+        showSizeChanger: true,
+        defaultPageSize: 10,
+        pageSizeOptions: [10, 20, 50, 100],
+      }}
       scroll={{ y: "64vh" }}
       columns={columns}
       dataSource={types}
       loading={fetchLoading}
       rowKey={"id"}
     />
+   
   );
 };
 

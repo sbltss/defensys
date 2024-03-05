@@ -19,6 +19,7 @@ const Sidebar = ({ collapsed, routes }) => {
       width={"270px"}
     >
       <SiderHeader collapsed={collapsed} />
+      
       {/* <div className="flex gap-3 items-center p-4 flex-col font-semibold"> */}
       {/* {routes.map((route) => (
           <button
@@ -37,6 +38,7 @@ const Sidebar = ({ collapsed, routes }) => {
       {/* </div> */}
       <Menu
         // onClick={(e) => navigate(e.keyPath.reverse().join(""))}
+
         mode="inline"
         selectedKeys={["/" + location.pathname.split("/").at(-1)]}
         defaultOpenKeys={["/" + location.pathname.split("/").at(1)]}

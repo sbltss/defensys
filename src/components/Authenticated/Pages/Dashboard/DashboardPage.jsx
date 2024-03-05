@@ -149,7 +149,7 @@ const Card = ({ children, title, type }) => {
     <div
       className={
         type === "sos" || expanded === type
-          ? "bg-white rounded shadow p-2 flex flex-col xl:h-[calc(100vh-100px)]"
+          ? "bg-white rounded shadow p-2 flex flex-col ]"
           : "bg-white rounded shadow p-2 flex flex-col h-[calc(50vh-60px)]"
         // ? "bg-white rounded shadow p-2 flex flex-col xl:h-[calc(100vh-100px)] lg: h-[calc(50vh-60px)]"
         // : "bg-white rounded shadow p-2 flex flex-col h-[calc(50vh-60px)]"

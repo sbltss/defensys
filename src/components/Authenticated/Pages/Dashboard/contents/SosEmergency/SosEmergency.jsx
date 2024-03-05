@@ -159,7 +159,7 @@ const SosEmergency = ({ expanded }) => {
         </span>
         <div className="w-full">
           <Chart
-            height={"110%"}
+            height={"47%"}
             width={"100%"}
             options={pieChartData.options}
             series={pieChartData.series}

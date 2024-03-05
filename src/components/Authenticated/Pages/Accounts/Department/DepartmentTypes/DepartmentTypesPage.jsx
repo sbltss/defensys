@@ -45,6 +45,7 @@ const DepartmentTypesPage = () => {
         selectedType={selectedType}
         reload={fetchTypesHandler}
       />
+        {/* Remove height */}
       <div className="bg-white rounded w-full shadow p-4 flex flex-col">
         <div className="border-b flex flex-row justify-between p-2">
           <span className="font-semibold text-xl">Departments Types</span>

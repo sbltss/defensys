@@ -18,7 +18,8 @@ const Sidebar = ({ collapsed, routes }) => {
       collapsed={collapsed}
       width={"270px"}
     >
-      <SiderHeader collapsed={collapsed} />
+        <SiderHeader collapsed={collapsed} />
+        <div style={{ overflowY: "auto", height: "calc(90vh - 70px)" }}>
       {/* <div className="flex gap-3 items-center p-4 flex-col font-semibold"> */}
       {/* {routes.map((route) => (
           <button
@@ -35,6 +36,7 @@ const Sidebar = ({ collapsed, routes }) => {
           </button>
         ))} */}
       {/* </div> */}
+      
       <Menu
         // onClick={(e) => navigate(e.keyPath.reverse().join(""))}
         mode="inline"
@@ -85,7 +87,7 @@ const Sidebar = ({ collapsed, routes }) => {
               };
           }),
         }))}
-      />
+      /></div>
     </Sider>
   );
 };

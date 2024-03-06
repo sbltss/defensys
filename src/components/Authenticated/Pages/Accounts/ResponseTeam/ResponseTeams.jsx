@@ -308,7 +308,7 @@ const ResponseTeams = () => {
       <Helmet>
         <title>Defensys | Accounts - Response Teams</title>
       </Helmet>
-      <div className="bg-white rounded w-full h-full shadow p-4 flex flex-col">
+      <div className="bg-white rounded w-full  shadow p-4 flex flex-col">
         <div className="border-b flex flex-row justify-between p-2">
           <span className="font-semibold text-xl">Response Teams</span>
           {currentUser.accountType === "department" && (

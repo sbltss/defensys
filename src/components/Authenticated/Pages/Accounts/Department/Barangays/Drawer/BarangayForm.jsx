@@ -37,6 +37,7 @@ const BarangayForm = ({ mode, onClose, reloadTable }) => {
 
   return (
     <Drawer
+      forceRender
       placement="right"
       title={
         mode !== "adding" ? "Edit Barangay Information" : "Create a Barangay"

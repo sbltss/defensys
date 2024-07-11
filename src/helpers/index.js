@@ -236,7 +236,7 @@ export const getReportCategory = (
     reportCategories.filter(
       (rc) => rc.subCategoryId === selected.categoryId
     )[0] || {};
-  if (selected2.title) result.push(selected2.title);
+  // if (selected2.title) result.push(selected2.title);
   if (reportCategoryDesc?.length > 0) result.push(reportCategoryDesc);
   return result.join(" - ");
 };

@@ -92,15 +92,10 @@ const PendingTickets = () => {
     {
       width: "150px",
       title: "Type",
-      dataIndex: "caseTypeDesc",
-      render: (data) => (
-        <div className="flex flex-col items-center">
-          <Badge type="caseType" text={data} />
-        </div>
-      ),
-
+      dataIndex: "caseType",
+      render: (data) => <Badge type="caseType" text={getTypeName(data)} />,
       filters: getFilters(pendingTickets, "caseType", getTypeName),
-      onFilter: (value, record) => record.caseTypeDesc === value,
+      onFilter: (value, record) => record.caseType === value,
     },
     {
       width: "150px",
@@ -168,10 +163,10 @@ const PendingTickets = () => {
       title: "Date",
       dataIndex: "dateCreated",
       render: (data) => {
-        if (data.endsWith('Z')) {
-          return mtz(data).tz('utc').format("lll")
+        if (data.endsWith("Z")) {
+          return mtz(data).tz("utc").format("lll");
         }
-        return moment(data).format("lll")
+        return moment(data).format("lll");
       },
 
       sorter: (a, b) => {

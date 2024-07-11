@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Badge from "../../../../UI/Badge/Badge";
 import moment from "moment";
-import mtz from "moment-timezone"
+import mtz from "moment-timezone";
 import { Tag, message } from "antd";
 import { Table } from "ant-table-extensions";
 import Button from "../../../../UI/Button/Button";
@@ -16,6 +16,7 @@ import OngoingDrawer from "../SupervisorTickets/Drawers/OngoingDrawer";
 import { useState } from "react";
 import MenuButton from "../../../../UI/Menu/MenuButton";
 import HazardNoteDrawer from "./Drawers/HazardNoteDrawer";
+import { getFilters } from "../../../../../helpers";
 
 const { updateReportsOfTheDay, updateSupervisorTickets, selectOngoingTicket } =
   ticketsActions;
@@ -30,6 +31,12 @@ const ReportsOfTheDay = () => {
   const { reportsOfTheDay, fetchReportsOfTheDayLoading } = useSelector(
     (state) => state.tickets
   );
+
+  const { caseTypes } = resources;
+
+  const getTypeName = (id) => {
+    return caseTypes?.filter((ct) => +ct.id === +id)[0]?.typeName;
+  };
 
   const setAsReportOfTheDay = async (hazardId) => {
     const request = await updateTicketReportOfTheDay({
@@ -110,15 +117,10 @@ const ReportsOfTheDay = () => {
     {
       width: "150px",
       title: "Type",
-      dataIndex: "typeName",
-      render: (data) => (
-        <div className="flex flex-col items-center">
-          <Badge type="caseType" text={data} />
-        </div>
-      ),
-
-      //   filters: getFilters(reportsOfTheDay, "caseType", getTypeName),
-      onFilter: (value, record) => record.typeName === value,
+      dataIndex: "caseType",
+      render: (data) => <Badge type="caseType" text={getTypeName(data)} />,
+      filters: getFilters(reportsOfTheDay, "caseType", getTypeName),
+      onFilter: (value, record) => record.caseType === value,
     },
 
     {
@@ -126,10 +128,10 @@ const ReportsOfTheDay = () => {
       title: "Date",
       dataIndex: "dateCreated",
       render: (data) => {
-        if (data.endsWith('Z')) {
-          return mtz(data).tz('utc').format("lll")
+        if (data.endsWith("Z")) {
+          return mtz(data).tz("utc").format("lll");
         }
-        return moment(data).format("lll")
+        return moment(data).format("lll");
       },
 
       sorter: (a, b) => {

@@ -10,7 +10,9 @@ import { Tag } from "antd";
 
 const Reports = ({ selectTicketHandler }) => {
   const { fetchedTickets, isLoading } = useSelector((state) => state.reports);
+  console.log(fetchedTickets.filter((ticket) => ticket.status === 2));
   const { caseTypes, reportCategory } = useSelector((state) => state.resources);
+  console.log(reportCategory);
   const getTypeName = (id) => {
     return caseTypes?.filter((ct) => +ct.id === +id)[0]?.typeName;
   };
@@ -82,7 +84,7 @@ const Reports = ({ selectTicketHandler }) => {
     },
     {
       width: 200,
-      title: "Report Category",
+      title: "Report Categorys=",
       dataIndex: null,
       render: (d) =>
         getReportCategory(

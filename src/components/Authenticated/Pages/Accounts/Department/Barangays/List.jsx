@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Table } from "ant-table-extensions";
 import React from "react";
 import Button from "../../../../../UI/Button/Button";
 import Badge from "../../../../../UI/Badge/Badge";
@@ -7,6 +7,7 @@ import moment from "moment";
 import { searchFunction } from "../../../../../../helpers/searchFunction";
 
 const List = ({ data, isLoading, selectBarangay }) => {
+  console.log(data);
   const columns = [
     {
       width: "70px",
@@ -30,9 +31,12 @@ const List = ({ data, isLoading, selectBarangay }) => {
     },
     {
       width: "100px",
-      title: "Date Updated",
-      dataIndex: "dateUpdated",
-      render: (data) => moment(data).format("lll"),
+      title: "Date Created",
+      dataIndex: "dateCreated",
+      // defaultSortOrder: "ascend",
+      sorter: (a, b) => a.dateCreated.localeCompare(b.dateCreated),
+      defaultSortOrder: "descend",
+      render: (e) => moment(e).format("lll"),
     },
   ];
   return (
@@ -41,10 +45,14 @@ const List = ({ data, isLoading, selectBarangay }) => {
         searchFunction: searchFunction,
       }}
       searchable={true}
+      exportable={true}
+      exportableProps={{ showColumnPicker: true }}
       pagination={{
         showSizeChanger: true,
         defaultPageSize: 10,
         pageSizeOptions: [10, 20, 50, 100],
+        showTotal: (total, range) =>
+          `${range[0]}-${range[1]} of ${total} items`,
       }}
       rowKey={"brgyCode"}
       columns={columns}

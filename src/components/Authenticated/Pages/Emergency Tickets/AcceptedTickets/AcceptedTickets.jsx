@@ -90,14 +90,20 @@ const AcceptedTickets = () => {
     {
       width: "200px",
       title: "Type",
-      dataIndex:
-        currentUser.accountType === "agent" ? "caseTypeDesc" : "typeName",
-      render: (data) => <Badge type="caseType" text={data} />,
+      dataIndex: currentUser.accountType === "agent" ? "caseType" : "typeName",
+      render: (data) => <Badge type="caseType" text={getTypeName(data)} />,
       filters: getFilters(acceptedTickets, "caseType", getTypeName),
       onFilter: (value, record) =>
         currentUser.accountType === "agent"
-          ? record.caseTypeDesc === value
+          ? record.caseType === value
           : record.typeName === value,
+
+      // width: "150px",
+      // title: "Type",
+      // dataIndex: "caseType",
+      // render: (data) => <Badge type="caseType" text={getTypeName(data)} />,
+      // filters: getFilters(pendingTickets, "caseType", getTypeName),
+      // onFilter: (value, record) => record.caseType === value,
     },
     {
       width: "150px",

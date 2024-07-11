@@ -4,6 +4,7 @@ import { searchFunction } from "../../../../helpers/searchFunction";
 import moment from "moment";
 
 const CitizenTable = ({ citizens, loading }) => {
+  console.log(citizens);
   const columns = [
     {
       title: "Account ID",
@@ -75,6 +76,8 @@ const CitizenTable = ({ citizens, loading }) => {
         showSizeChanger: true,
         defaultPageSize: 10,
         pageSizeOptions: [10, 20, 50, 100],
+        showTotal: (total, range) =>
+          `${range[0]} - ${range[1]} of ${total} items`,
       }}
       rowKey={"accountId"}
       dataSource={citizens}

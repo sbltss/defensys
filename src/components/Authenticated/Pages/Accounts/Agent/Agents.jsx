@@ -124,7 +124,7 @@ const Agents = () => {
       dataIndex: null,
       render: (d) => {
         return (
-          <div className="flex flex-col items-center gap-1">
+          <div className="flex items-center gap-1">
             {peerConnections[0]?.includes(d.accountId) && (
               <div className="flex flex-row gap-2">
                 <span>Call:</span>
@@ -193,6 +193,8 @@ const Agents = () => {
     {
       title: "Date Updated",
       dataIndex: "dateUpdated",
+      // sorter: (a, b) => a.dateUpdated.localeCompare(b.dateUpdated),
+      // defaultSortOrder: "descend",
       render: (data) => moment(data).format("lll"),
     },
   ];
@@ -202,7 +204,7 @@ const Agents = () => {
       <Helmet>
         <title>Defensys | Accounts - Dispatchers</title>
       </Helmet>
-      <div className="bg-white rounded w-full h-full shadow p-4 flex flex-col">
+      <div className=" bg-white rounded w-full shadow p-4 flex flex-col">
         <div className="border-b flex flex-row justify-between p-2">
           <span className="font-semibold text-xl">Dispatchers</span>
           {currentUser.accountType === "admin" && (
@@ -248,6 +250,8 @@ const Agents = () => {
                 showSizeChanger: true,
                 defaultPageSize: 10,
                 pageSizeOptions: [10, 20, 50, 100],
+                showTotal: (total, range) =>
+                  `${range[0]} - ${range[1]} of ${total} items`,
               }}
               rowKey={"accountId"}
               columns={

@@ -14,6 +14,7 @@ const ReportsPage = () => {
   const [selectedDateRange, setSelectedDateRange] = useState(null);
   const resources = useSelector((state) => state.resources);
   const { selectedTicket, reportData } = useSelector((state) => state.reports);
+
   const selectTicketHandler = (e) => {
     dispatch(setSelectedTicket(e));
   };
@@ -58,7 +59,7 @@ const ReportsPage = () => {
         reportData={reportData}
         selectTicketHandler={selectTicketHandler}
       />
-      <div className="bg-white rounded w-full h-full shadow p-4 flex flex-col">
+      <div className=" bg-white rounded w-full shadow p-4 flex flex-col">
         <div className="border-b flex flex-row justify-between p-2">
           <span className="font-semibold text-xl">Reports</span>
           <DatePicker.RangePicker

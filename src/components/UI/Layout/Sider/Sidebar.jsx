@@ -12,7 +12,7 @@ const Sidebar = ({ collapsed, routes }) => {
   const location = useLocation();
   return (
     <Sider
-      className={`bg-white ${currentUser?.isDemo ? "pt-9" : ""}`}
+      className={` bg-white ${currentUser?.isDemo ? "pt-9" : ""}`}
       trigger={null}
       collapsible
       collapsed={collapsed}
@@ -36,8 +36,10 @@ const Sidebar = ({ collapsed, routes }) => {
         ))} */}
       {/* </div> */}
       <Menu
+        className="py-3"
         // onClick={(e) => navigate(e.keyPath.reverse().join(""))}
         mode="inline"
+        // style={{ backgroundColor: "red", overflow: "hidden" }}
         selectedKeys={["/" + location.pathname.split("/").at(-1)]}
         defaultOpenKeys={["/" + location.pathname.split("/").at(1)]}
         items={routes.map((route) => ({

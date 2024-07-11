@@ -87,7 +87,13 @@ const CaseTypes = () => {
       title: "Marker",
       dataIndex: "icon",
       render: (d) =>
-        d && <img src={import.meta.env.VITE_BASE_URL + "/" + d} alt="marker" />,
+        d && (
+          <img
+            src={import.meta.env.VITE_BASE_URL + "/" + d}
+            alt="marker"
+            className=" w-12"
+          />
+        ),
     },
   ];
 
@@ -96,7 +102,7 @@ const CaseTypes = () => {
       <Helmet>
         <title>Defensys | Accounts - CaseTypes</title>
       </Helmet>
-      <div className="bg-white rounded w-full h-full shadow p-4 flex flex-col">
+      <div className="bg-white rounded w-full shadow p-4 flex flex-col">
         <div className="border-b flex flex-row justify-between p-2">
           <span className="font-semibold text-xl">Case Types</span>
           <Button
@@ -116,6 +122,8 @@ const CaseTypes = () => {
               showSizeChanger: true,
               defaultPageSize: 10,
               pageSizeOptions: [10, 20, 50, 100],
+              showTotal: (total, range) =>
+                `${range[0]} - ${range[1]} of ${total} items`,
             }}
             rowKey={"id"}
             columns={columns}

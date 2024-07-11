@@ -52,7 +52,6 @@ const SensorsPage = () => {
   useEffect(() => {
     form.setFieldValue("address", locationName);
   }, [locationName]);
-
   const columns = [
     {
       width: 100,
@@ -129,7 +128,7 @@ const SensorsPage = () => {
         selectedSensor={selectedSensor}
         setSelectedSensor={setSelectedSensor}
       />
-      <div className="bg-white rounded w-full h-full shadow p-4 flex flex-col">
+      <div className="bg-white rounded w-full shadow p-4 flex flex-col">
         <div className="border-b flex flex-row justify-between p-2">
           <span className="font-semibold text-xl">Sensors</span>
           <Button
@@ -149,6 +148,8 @@ const SensorsPage = () => {
               showSizeChanger: true,
               defaultPageSize: 10,
               pageSizeOptions: [10, 20, 50, 100],
+              showTotal: (total, range) =>
+                `${range[0]} - ${range[1]} of ${total} items`,
             }}
             rowKey={"sensorId"}
             columns={columns}

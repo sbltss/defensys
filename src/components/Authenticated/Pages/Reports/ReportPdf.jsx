@@ -52,7 +52,7 @@ const ReportPdf = ({ reportCategories, reportData, currentUser }) => {
     },
     {
       label: "Coordinates",
-      value: reportData?.transactionNumber,
+      value: `latitude: ${reportData?.latitude},  longitude: ${reportData?.longitude}`,
     },
     {
       label: "Date & Time Reported",

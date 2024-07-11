@@ -96,7 +96,7 @@ const TicketInformation = ({ reportData }) => {
           ? "Closed"
           : "Cancelled"}
       </Item> */}
-        <Item label="Content">{content}</Item>
+        <Item label="Contents">{content}</Item>
         {!address && !latitude && !longitude ? (
           <>
             <Item label="Address">{ccLat}</Item>

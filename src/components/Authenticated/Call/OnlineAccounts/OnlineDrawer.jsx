@@ -59,7 +59,7 @@ const OnlineDrawer = ({
     if (status === "ONLINE" && callIncoming === false) {
       dispatch(dispatch(setOnlineListOpen(false)));
     }
-  }, [status, callIncoming])
+  }, [status, callIncoming]);
 
   useEffect(() => {
     let sub;
@@ -323,7 +323,7 @@ const OnlineDrawer = ({
             dispatch(setStatus("ONLINE"));
             currentStream.current?.getTracks().forEach((track) => track.stop());
             message.info("The call has been disconnected");
-            dispatch(setOnlineListOpen(false))
+            dispatch(setOnlineListOpen(false));
             subs();
           }
         });
@@ -356,7 +356,7 @@ const OnlineDrawer = ({
           dispatch(setStatus("ONLINE"));
           stream.getTracks().forEach((track) => track.stop());
           message.info("The call has been disconnected");
-          dispatch(setOnlineListOpen(false))
+          dispatch(setOnlineListOpen(false));
         });
       })
       .catch((err) => {
@@ -397,7 +397,7 @@ const OnlineDrawer = ({
     currentStream.current?.getTracks().forEach((track) => track.stop());
     setCallerInfo(null);
     setCallingInfo(null);
-    dispatch(setOnlineListOpen(false))
+    dispatch(setOnlineListOpen(false));
   };
 
   const acceptCallHandler = async () => {

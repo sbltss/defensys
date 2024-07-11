@@ -169,7 +169,7 @@ const Call = () => {
             },
           });
           mixAV.current.record();
-
+          console.log(peerstream, "klklkl");
           videoRef.current.srcObject = peerstream;
           videoRef.current.addEventListener("loadedmetadata", () => {
             videoRef.current.play();

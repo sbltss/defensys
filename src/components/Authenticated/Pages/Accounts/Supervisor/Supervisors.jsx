@@ -52,7 +52,6 @@ const Supervisors = () => {
   const reactivateAccountHandler = (e) => {
     dispatch(reactivateAccount({ listType: "supervisorList", accountId: e }));
   };
-
   useEffect(() => {
     if (token)
       dispatch(
@@ -113,19 +112,24 @@ const Supervisors = () => {
     {
       title: "Name",
       dataIndex: null,
+      sorter: (a, b) => a.firstName.localeCompare(b.firstName),
       render: (d) => `${d.firstName} ${d.lastName}`,
     },
     {
       title: "Mobile Number",
       dataIndex: "contactNumber",
+      sorter: (a, b) => a.contactNumber.localeCompare(b.contactNumber),
     },
     {
       title: "Email",
       dataIndex: "email",
+      sorter: (a, b) => a.email.localeCompare(b.email),
     },
     {
       title: "Date Updated",
       dataIndex: "dateUpdated",
+      sorter: (a, b) => a.dateUpdated.localeCompare(b.dateUpdated),
+      defaultSortOrder: "descend",
       render: (data) => moment(data).format("lll"),
     },
   ];
@@ -135,7 +139,7 @@ const Supervisors = () => {
       <Helmet>
         <title>Defensys | Accounts - Supervisors</title>
       </Helmet>
-      <div className="bg-white rounded w-full h-full shadow p-4 flex flex-col">
+      <div className="bg-white rounded w-full shadow p-4 flex flex-col">
         <div className="border-b flex flex-row justify-between p-2">
           <span className="font-semibold text-xl">Supervisors</span>
           <Button
@@ -145,7 +149,7 @@ const Supervisors = () => {
             onClick={() => openDrawerHandler("adding")}
           />
         </div>
-        <div className="w-full h-full">
+        <div className="w-full h-full overflow-hidden">
           <Table
             searchableProps={{
               searchFunction: searchFunction,
@@ -155,6 +159,8 @@ const Supervisors = () => {
               showSizeChanger: true,
               defaultPageSize: 10,
               pageSizeOptions: [10, 20, 50, 100],
+              showTotal: (total, range) =>
+                `${range[0]} - ${range[1]} of ${total} items`,
             }}
             rowKey={"accountId"}
             columns={columns}

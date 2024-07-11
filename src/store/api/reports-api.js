@@ -14,9 +14,9 @@ axios.interceptors.request.use(async function (config) {
   return config;
 });
 
-export const getDashboardData = async () => {
+export const getDashboardData = async ({ body }) => {
   try {
-    const result = await axios.get("getDashboardData");
+    const result = await axios.post("getDashboardData", body);
     return result;
   } catch (err) {
     return err;
@@ -25,7 +25,7 @@ export const getDashboardData = async () => {
 
 export const excludeRTReport = async (payload) => {
   try {
-    const result = await axios.get("excludeRTReport/"+payload.param);
+    const result = await axios.get("excludeRTReport/" + payload.param);
     return result;
   } catch (err) {
     return err;
@@ -34,7 +34,7 @@ export const excludeRTReport = async (payload) => {
 
 export const includeRTReport = async (payload) => {
   try {
-    const result = await axios.get("includeRTReport/"+payload.param);
+    const result = await axios.get("includeRTReport/" + payload.param);
     return result;
   } catch (err) {
     return err;

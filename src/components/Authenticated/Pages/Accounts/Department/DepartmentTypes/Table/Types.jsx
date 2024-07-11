@@ -30,10 +30,17 @@ const Types = ({ fetchLoading, types, setSelectedType }) => {
   return (
     <Table
       searchableProps={{ searchFunction }}
-      scroll={{ y: "64vh" }}
+      scroll={{ x: "100vw", y: "50vh" }}
       columns={columns}
       dataSource={types}
       loading={fetchLoading}
+      pagination={{
+        showSizeChanger: true,
+        defaultPageSize: 10,
+        pageSizeOptions: [10, 20, 50, 100],
+        showTotal: (total, range) =>
+          `${range[0]} - ${range[1]} of ${total} items`,
+      }}
       rowKey={"id"}
     />
   );

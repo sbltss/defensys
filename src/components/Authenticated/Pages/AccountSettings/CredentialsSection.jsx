@@ -20,7 +20,7 @@ const CredentialsSection = () => {
   return (
     <div className="flex flex-col gap-2">
       <div className="bg-gray-200 rounded-lg py-2 px-4 font-medium">
-        Command Center
+        Change Password
       </div>
       <div className="flex flex-col gap-6 max-w-md">
         <Form

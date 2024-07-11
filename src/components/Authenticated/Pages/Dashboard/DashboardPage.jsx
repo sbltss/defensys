@@ -34,7 +34,7 @@ const DashboardPage = () => {
       <div
         className={
           !expanded
-            ? "grid lg:grid-cols-2 xl:grid-cols-3 gap-4 gap-y-0"
+            ? "grid lg:grid-cols-2 xl:grid-cols-3 gap-2 bg-white"
             : undefined
         }
       >
@@ -43,7 +43,7 @@ const DashboardPage = () => {
             expanded
               ? expanded !== "sos"
                 ? "hidden"
-                : "col-span-2 row-span-1 mb-4 xl:mb-0 xl:col-span-1 xl:row-span-2"
+                : "col-span-2 row-span-1 mb-4 xl:mb-0 xl:col-span-1 xl:row-span-2 "
               : "col-span-2 row-span-1 mb-4 xl:mb-0 xl:col-span-1 xl:row-span-2"
           }
         >

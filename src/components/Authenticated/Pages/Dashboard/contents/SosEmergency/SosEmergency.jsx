@@ -1,5 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { DatePicker, Spin, Form } from "antd";
+import dayjs from "dayjs";
+import moment from "moment";
 import Chart from "react-apexcharts";
 import { useDispatch, useSelector } from "react-redux";
 import withInjuryIcon from "../../../../../../assets/img/icons/withInjury.png";
@@ -9,19 +12,28 @@ import {
   dashboardActions,
   resourcesActions,
 } from "../../../../../../store/store";
+import Button from "../../../../../UI/Button/Button";
+import PageLoader from "../../../../../UI/Layout/PageLoader";
 
+const { RangePicker } = DatePicker;
 const { fetchResources } = resourcesActions;
 const { getSosData } = dashboardActions;
 
 const barangayFeatures = [];
 
 const SosEmergency = ({ expanded }) => {
+  const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { sosData } = useSelector((state) => state.dashboard);
   const resources = useSelector((state) => state.resources);
   const { currentUser } = useSelector((state) => state.auth);
   const [geoJson, setGeoJson] = useState(null);
   const { caseTypes } = resources;
+
+  const dateFormat = "YYYY-MM-DD";
+
+  const { fetchSosDataLoading } = useSelector((state) => state.dashboard);
+  console.log(fetchSosDataLoading);
 
   const fetchGeoJson = async (cityId) => {
     const request = await axios.get(
@@ -64,7 +76,6 @@ const SosEmergency = ({ expanded }) => {
   const [pieChartData, setPieChartData] = useState({
     series: [],
     options: {
-      labels: [],
       plotOptions: {
         pie: {
           donut: {
@@ -93,10 +104,12 @@ const SosEmergency = ({ expanded }) => {
       chart: {
         type: "donut",
         redrawOnParentResize: true,
+        width: "100%",
+        height: "auto",
       },
       legend: {
-        // formatter: (e) => (e.length > 20 ? e.substr(0, 20) + "..." : e),
         show: true,
+        position: "bottom",
         fontSize: "10px",
         markers: {
           width: 10,
@@ -111,7 +124,14 @@ const SosEmergency = ({ expanded }) => {
   });
 
   useEffect(() => {
-    dispatch(getSosData());
+    dispatch(
+      getSosData({
+        body: {
+          dateFrom: dayjs().startOf("year").format("YYYY-MM-DD"),
+          dateTo: dayjs().format("YYYY-MM-DD"),
+        },
+      })
+    );
   }, []);
 
   useEffect(() => {
@@ -150,110 +170,162 @@ const SosEmergency = ({ expanded }) => {
     }
   }, [sosData, caseTypes, geoJson]);
 
-  console.log(dashboardData);
-  return (
-    <div className="grid lg:grid-cols-2 xl:grid-flow-row xl:grid-cols-1 lg:gap-2 xl:gap-4 ">
-      <div className="lg:col-span-1 xl:col-span-1">
-        <span className="mb-2 font-semibold italic text-lg">
-          Types of Incidents
-        </span>
-        <div className="w-full">
-          <Chart
-            height={"110%"}
-            width={"100%"}
-            options={pieChartData.options}
-            series={pieChartData.series}
-            type="donut"
-          />
-        </div>
-      </div>
-      <div className="lg:col-span-1 xl:col-span-1">
-        <span className="mb-2 font-semibold italic text-lg">
-          Incidents of Barangays
-        </span>
-        <div className="w-full overflow-x-scroll overflow-y-hidden">
-          <Chart
-            height={"120%"}
-            // width={
-            //   dashboardData.barangayValues?.filter((val) => val.counts.total > 0)
-            //     .length * 30
-            // }
-            options={{
-              chart: {
-                type: "bar",
-              },
-              plotOptions: {
-                bar: {
-                  borderRadius: 2,
-                  horizontal: false,
-                },
-              },
-              dataLabels: {
-                enabled: false,
-              },
-              xaxis: {
-                tooltip: {
-                  enabled: true,
-                  formatter: (e) => {
-                    return e;
-                  },
-                },
-                labels: {
-                  show: true,
-                  formatter: (e) => {
-                    return truncateString(e, 7);
-                  },
-                },
-                categories: dashboardData?.barangayValues?.map(
-                  (d) => d.brgyName
-                ),
-              },
-            }}
-            series={[
-              {
-                name: "Emergency Tickets",
-                data: dashboardData?.barangayValues?.map((d) => d.counts.total),
-              },
-            ]}
-            type="bar"
-          />
-        </div>
-      </div>
-      <div className="flex flex-col lg:col-span-2 xl:col-span-1 xl:gap-4">
-        <div className="w-full flex flex-row justify-between ">
-          <div className="w-1/2 text-center border-r-2 border-gray-100">
-            <span className="mb-2 font-semibold italic">
-              Incidents Reported
-            </span>
-            <div className="flex flex-row flex-wrap justify-around">
-              {dashboardData?.reportedCount?.map((count, index) => (
-                <CountBox data={count} key={index} />
-              ))}
-            </div>
-          </div>
-          <div className="w-1/2 text-center border-l-2 border-gray-100">
-            <span className="mb-2 font-semibold italic">
-              Incidents Resolved
-            </span>
-            <div className="flex flex-row flex-wrap justify-around">
-              {dashboardData?.resolvedCount?.map((count, index) => (
-                <CountBox data={count} key={index} />
-              ))}
-            </div>
-          </div>
-        </div>
+  const onFinish = (value) => {
+    dispatch(
+      getSosData({
+        body: {
+          dateFrom: dayjs(value.pick[0]).format("YYYY-MM-DD"),
+          dateTo: dayjs(value.pick[1]).format("YYYY-MM-DD"),
+        },
+      })
+    );
+  };
 
-        <div className="flex flex-row justify-between">
-          <div className="w-1/2 mr-2">
-            <span className="mb-2 font-semibold italic ">With Injury</span>
-            <InjuryBox data={dashboardData.withInjuryCount} />
-          </div>
-          <div className="w-1/2 ml-2">
-            <span className="mb-2 font-semibold italic ">Without Injury</span>
-            <InjuryBox data={dashboardData.withoutInjuryCount} />
-          </div>
+  return (
+    <div className="grid lg:grid-cols-2 xl:grid-flow-row xl:grid-cols-1 lg:gap-2 xl:gap-4 h-full overflow-x-hidden overflow-y-auto">
+      {fetchSosDataLoading ? (
+        <div className="flex items-center justify-center">
+          <Spin size="large" />
         </div>
-      </div>
+      ) : (
+        <>
+          <div className="lg:col-span-1 xl:col-span-1">
+            <span className=" font-semibold italic text-lg">
+              Types of Incidents
+            </span>
+            <div className="w-full">
+              <Form
+                form={form}
+                onFinish={onFinish}
+                initialValues={{
+                  pick: [dayjs().startOf("year"), dayjs()],
+                }}
+              >
+                <div className="flex items-center">
+                  <Form.Item name="pick">
+                    <RangePicker
+                      format={dateFormat}
+                      disabledDate={(current) => {
+                        return (
+                          moment().add(-1) <= current
+                          // moment().add(1, "month") <= current
+                        );
+                      }}
+                    />
+                  </Form.Item>
+                  <Form.Item>
+                    <Button
+                      type="primary"
+                      text="Submit"
+                      onClick={() => form.submit()}
+                    />
+                  </Form.Item>
+                </div>
+              </Form>
+              <div className="flex justify-center gap-2 items-center flex-col w-full">
+                <div className="w-full">
+                  <Chart
+                    height={350}
+                    options={pieChartData.options}
+                    series={pieChartData.series}
+                    type="donut"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="lg:col-span-1 xl:col-span-1 ">
+            <span className=" font-semibold italic text-lg">
+              Incidents of Barangays
+            </span>
+            <div className="w-full overflow-x-scroll overflow-y-hidden">
+              <Chart
+                height={"120%"}
+                // width={
+                //   dashboardData.barangayValues?.filter((val) => val.counts.total > 0)
+                //     .length * 30
+                // }
+                options={{
+                  chart: {
+                    type: "bar",
+                  },
+                  plotOptions: {
+                    bar: {
+                      borderRadius: 2,
+                      horizontal: false,
+                    },
+                  },
+                  dataLabels: {
+                    enabled: false,
+                  },
+                  xaxis: {
+                    tooltip: {
+                      enabled: true,
+                      formatter: (e) => {
+                        return e;
+                      },
+                    },
+                    labels: {
+                      show: true,
+                      formatter: (e) => {
+                        return truncateString(e, 7);
+                      },
+                    },
+                    categories: dashboardData?.barangayValues?.map(
+                      (d) => d.brgyName
+                    ),
+                  },
+                }}
+                series={[
+                  {
+                    name: "Emergency Tickets",
+                    data: dashboardData?.barangayValues?.map(
+                      (d) => d.counts.total
+                    ),
+                  },
+                ]}
+                type="bar"
+              />
+            </div>
+          </div>
+          <div className="flex flex-col lg:col-span-2 xl:col-span-1 xl:gap-4">
+            <div className="w-full flex flex-row justify-between ">
+              <div className="w-1/2 text-center border-r-2 border-gray-100">
+                <span className="mb-2 font-semibold italic">
+                  Incidents Reported
+                </span>
+                <div className="flex flex-row flex-wrap justify-around">
+                  {dashboardData?.reportedCount?.map((count, index) => (
+                    <CountBox data={count} key={index} />
+                  ))}
+                </div>
+              </div>
+              <div className="w-1/2 text-center border-l-2 border-gray-100">
+                <span className="mb-2 font-semibold italic">
+                  Incidents Resolved
+                </span>
+                <div className="flex flex-row flex-wrap justify-around">
+                  {dashboardData?.resolvedCount?.map((count, index) => (
+                    <CountBox data={count} key={index} />
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-row justify-between">
+              <div className="w-1/2 mr-2">
+                <span className="mb-2 font-semibold italic ">With Injury</span>
+                <InjuryBox data={dashboardData.withInjuryCount} />
+              </div>
+              <div className="w-1/2 ml-2">
+                <span className="mb-2 font-semibold italic ">
+                  Without Injury
+                </span>
+                <InjuryBox data={dashboardData.withoutInjuryCount} />
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

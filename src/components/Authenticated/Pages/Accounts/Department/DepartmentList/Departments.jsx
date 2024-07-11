@@ -168,7 +168,7 @@ const Departments = () => {
       <Helmet>
         <title>Defensys | Accounts - Departments</title>
       </Helmet>
-      <div className="bg-white rounded w-full h-full shadow p-4 flex flex-col">
+      <div className="bg-white rounded w-full shadow p-4 flex flex-col">
         <div className="border-b flex flex-row justify-between p-2">
           <span className="font-semibold text-xl">Departments</span>
           <Button
@@ -201,26 +201,26 @@ const Departments = () => {
             </Select>
           </div>
         )}
-        <div className="w-full h-full">
-          <Table
-            searchableProps={{
-              searchFunction: searchFunction,
-            }}
-            searchable={true}
-            pagination={{
-              showSizeChanger: true,
-              defaultPageSize: 10,
-              pageSizeOptions: [10, 20, 50, 100],
-            }}
-            rowKey={"accountId"}
-            columns={columns}
-            loading={isLoading}
-            dataSource={departmentList.filter(
-              (d) => !selectedCc || d.commandCenterId === selectedCc
-            )}
-            scroll={{ y: "60vh", x: "100vw" }}
-          />
-        </div>
+        <Table
+          searchableProps={{
+            searchFunction: searchFunction,
+          }}
+          searchable={true}
+          pagination={{
+            showSizeChanger: true,
+            defaultPageSize: 10,
+            pageSizeOptions: [10, 20, 50, 100],
+            showTotal: (total, range) =>
+              `${range[0]} - ${range[1]} of ${total} items`,
+          }}
+          rowKey={"accountId"}
+          columns={columns}
+          loading={isLoading}
+          dataSource={departmentList.filter(
+            (d) => !selectedCc || d.commandCenterId === selectedCc
+          )}
+          scroll={{ y: "60vh", x: "100vw" }}
+        />
       </div>
       <Drawer
         placement="right"

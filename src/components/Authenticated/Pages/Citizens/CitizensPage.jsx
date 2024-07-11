@@ -12,7 +12,7 @@ const CitizensPage = () => {
       <Helmet>
         <title>Defensys - Citizens</title>
       </Helmet>
-      <div className="bg-white rounded w-full h-full shadow p-4 flex flex-col overflow-y-auto">
+      <div className="bg-white rounded w-full shadow p-4 flex flex-col overflow-y-auto">
         <div className="w-full h-full flex flex-col gap-3">
           <div className="border-b flex flex-row justify-between p-2">
             <span className="font-semibold text-xl">Search Citizens</span>

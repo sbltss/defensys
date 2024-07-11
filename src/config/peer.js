@@ -2,8 +2,8 @@ import { Peer } from "peerjs";
 
 const ConnectPeer = (agentId) => {
   const peer = new Peer(agentId, {
-    host: "command-center.defensys.ph",
-    port: "5000",
+    host: "office.dynamicglobalsoft.com",
+    port: "1180",
     path: "/",
     secure: true,
   });
